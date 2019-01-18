@@ -28,13 +28,13 @@ void fsm_pwm_init(void *args)
         LL_TIM_CC_EnableChannel(TIM3, LL_TIM_CHANNEL_CH3);
 
         LL_TIM_SetCounterMode(TIM3, LL_TIM_COUNTERMODE_UP);
-        LL_TIM_SetAutoReload(TIM3, 48000);
+        LL_TIM_SetAutoReload(TIM3, 0xFFFF);
         LL_TIM_SetPrescaler(TIM3, 1);
 
         LL_TIM_OC_SetMode(TIM3, LL_TIM_CHANNEL_CH3, LL_TIM_OCMODE_PWM1);
         LL_TIM_OC_EnableFast(TIM3, LL_TIM_CHANNEL_CH3);
         LL_TIM_OC_EnablePreload(TIM3, LL_TIM_CHANNEL_CH3);
-        LL_TIM_OC_SetCompareCH3(TIM3, 48000 * 0.1);
+        LL_TIM_OC_SetCompareCH3(TIM3, 0xFFFF * 0.1);
 
         LL_TIM_GenerateEvent_UPDATE(TIM3);
 
@@ -48,7 +48,7 @@ void fsm_pwm_handler(void *args)
         uint8_t pwm = ((uint8_t *)args)[0];
 
         if (abs(pwm) <= 100) {
-                LL_TIM_OC_SetCompareCH3(TIM3, 48000 * abs(pwm)/100);
+                LL_TIM_OC_SetCompareCH3(TIM3, 0xFFFF * abs(pwm)/100);
                 ((uint8_t *)args)[0] = 2;
                 memcpy((uint8_t *)args + 1, "OK", 2);
         }
