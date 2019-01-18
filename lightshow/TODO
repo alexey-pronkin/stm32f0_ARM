@@ -1,4 +1,2 @@
-from photos IPAD rewrite /lib/led.c
-
-to project see:
-- adc to see how to work with analog signal
+1) Synchonize song and blinking
+2) Make FFT and use frequency as blinking signal
